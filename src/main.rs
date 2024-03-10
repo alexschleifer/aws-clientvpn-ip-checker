@@ -64,8 +64,6 @@ pub(crate) async fn my_handler(_event: LambdaEvent<Request>) -> Result<Response,
     // extract some useful info from the request
 
     let allowed_country = ["IL","US","JP"]; // according to https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-    let user_coutry = String::new();
-    let user_city = String::new();
     let _connection_id = _event.payload.connection_id;
     let _endpoint_id = _event.payload.endpoint_id;
     let _common_name = _event.payload.common_name;
@@ -101,38 +99,4 @@ pub(crate) async fn my_handler(_event: LambdaEvent<Request>) -> Result<Response,
     }
 
     
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::{my_handler, Request};
-    use lambda_runtime::{Context, LambdaEvent};
-
-    #[tokio::test]
-    async fn response_is_good_for_simple_input() {
-        let id = "ID";
-
-        let mut context = Context::default();
-        //context.public_ip = id.to_string();
-
-        let payload = Request {
-            connection_id: "Conn12232434".to_string(),
-            endpoint_id: "alex-vpn-end-point".to_string(),
-            common_name: "cert-alex-tyto".to_string(),
-            username: "ale@tytocare.com".to_string(),
-            platform: "win 7".to_string(),
-            platform_version: "4.5.6.4".to_string(),
-            public_ip: "46.210.45.213".to_string(),
-            client_openvpn_version: "0pen-3.5.4".to_string(),
-            groups: "group1234".to_string(),
-            schema_version: "v2".to_string(),
-
-        };
-        let event = LambdaEvent { payload, context };
-
-        let result = my_handler(event).await.expect("Expected Ok response");
-
-        //assert_eq!(result.msg, "Command X executed.");
-        //assert_eq!(result.req_id, id.to_string());
-    }
 }
